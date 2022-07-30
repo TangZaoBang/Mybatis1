@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaobang.mapper.DeptMapper">
+    <select id="getEmpAndDeptByStep" resultType="Dept" resultMap="getEmpAndDeptByStep1">
+        select * from t_dept where  did=#{did}
+    </select>
+    <resultMap id="getEmpAndDeptByStep1" type="dept">
+        <id column="did" property="did"></id>
+        <result property="deptName" column="dept_name" ></result>
+    </resultMap>
+<select id="getDeptEmpById" resultMap="getDeptEmpByIdMap" resultType="dept">
+    select t_dept.*,t_emp.* from t_dept left join t_emp on t_dept.did=t_emp.did where t_dept.did=#{did}
+</select>
+    <resultMap id="getDeptEmpByIdMap" type="dept">
+
+        <id column="did" property="did"></id>
+       <result column="dept_name" property="deptName"></result>
+        <collection property="emps" ofType="Emp">
+            <id column="e_id" property="eid"></id>
+            <result property="eName" column="e_name"></result>
+            <result property="age" column="age"></result>
+            <result property="sex" column="sex"></result>
+            <result property="did" column="did"></result>
+
+        </collection>
+    </resultMap>
+
+    <select id="getDeptByStepOne" resultMap="getDeptByStepOneMap"  resultType="Dept">
+        select * from t_dept where did=#{did}
+    </select>
+    <resultMap id="getDeptByStepOneMap" type="Dept">
+        <id column="did" property="did"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="emps"  select="com.zaobang.mapper.EmpMapper.getEmpListById" column="did"></collection>
+    </resultMap>
+</mapper>
