@@ -12,6 +12,7 @@
         <module>MyBatis_demo</module>
         <module>Emp</module>
         <module>SSM-day01</module>
+        <module>testVersion</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
